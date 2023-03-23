@@ -5,13 +5,35 @@
 
 int main()
 {
-    //za::nn::mm::ANDGate();
-    //za::nn::mm::ORGate();
-    //za::nn::mm::NANDGate();
-    //za::nn::mm::XORGate();
-    za::nn::mm::SDR7To10();
-    //za::nn::mm::SDR7To7();
-    //za::nn::mm::SDR7To1();
+    size_t test_num = 1;
+    switch (test_num)
+    {
+    case 1:
+        za::nn::mm::ANDGate();
+        break;    
+    case 2:
+        za::nn::mm::ORGate();
+        break;    
+    case 3:
+        za::nn::mm::NANDGate();
+        break;    
+    case 4:
+        za::nn::mm::XORGate();
+        break;    
+    case 5:
+        za::nn::mm::SDR7To10();
+        break;    
+    case 6:
+        za::nn::mm::SDR7To7();
+        break;    
+    case 7:
+        za::nn::mm::SDR7To1();
+        break;
+    default:
+        za::nn::mm::ANDGate();
+        break;
+    }
 
+    return 0;
 }
 
