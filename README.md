@@ -1,4 +1,5 @@
 ## Neural Network Design At an Atomic Level
+![image]([https://user-images.githubusercontent.com/38358621/120076656-41d75780-c0d9-11eb-97fc-7f56e4cfa9bf.png](https://user-images.githubusercontent.com/38358621/227194530-cb1d3775-6f41-43f0-ba70-efe401fe8243.PNG)
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
