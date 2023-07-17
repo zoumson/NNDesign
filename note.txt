@@ -1,0 +1,505 @@
+
+Training Neural Networks in C++
+
+1. Choosing a Neural Network
+a. What is a neural network
+- A piece of software 
+- A model of the brain 
+- Capable of reproducing some behaviors of the brain 
+- Capable of learning  and classifying 
+- can be taught to recognize things presented to it 
+- Telling the difference between apple and orange in a picture 
+
+NN is not 
+- A series of if ... then statements 
+- All there is to machine learning 
+- The only type of classifier 
+
+Structure of NN:
+
+- Collection of neurons, smallest computing units, that computes small calculation to solve the problems 
+- Neurons can be interconnected in several ways 
+
+b. Why C++?
+- Operating systems
+- Database software 
+- Web browsers 
+- Banking 
+- Cloud systems 
+- Compilers
+- Embedded systems 
+- Library available: Pytorch, Tensorflow 
+
+c. The many applications of machine learning 
+c.1 
+c.1.1 Image(Face) Recognition
+c.1.2 Speech(Voice/Accent) Recognition
+c.1.3 Prediction(stock market, diagnostic, treatment in healthcare)
+c.1.4 Recommender systems(Netflix / Advertisment on facebook/ From purchase / View history/ Review stars)
+c.1.5 Guessing Games(Is your character more than 40 years old? / http://20q.net)
+
+c.2 Categories of machine learning :
+
+c.2.1 Supervised Learning
+
+c.2.1.1 actively teach AI by providing it with lots of data samples along with the results you expect 
+c.2.1.2  Regression: 
+- linear, 
+- logistic, 
+- exponential (ex: stock market Prediction and weather forecasting )
+
+c.2.1.2 Classification: 
+- support vector machines, 
+- Neural Network, 
+- Decision trees(Guessing games) 
+
+c.2.2 Unsupervised Learning
+c.2.2.1 Clustering : medical and Recommender systems 
+c.2.2.2 Anomaly detection : outlier detections/credit card fraud 
+c.2.2.3 Neural Network ; auto encoders/self-organizing maps and deep belief networks 
+
+
+c.2.3 Reinforcement Learning
+-Feedback loop
+-Reward
+-Penalty 
+- ex: video game playing AI
+
+
+
+d. Types of classifiers
+d.1 Logistic Regression: output range: 0 to 1 / input belong to class 0 or class 1
+d.2 K-Nearest Neighbors: 
+- using the majority of its k Neighbors, K must be an odd number to avoid ties
+- plot data in 2 D plan, square and triangle representing their labels, x, y represent the input data 
+- a new imput with x and y, we count its k Neighbors, within those k neighbors, count either square or triangle dominate 
+- the new point belong to the dominate
+- use euclidient distance as metric to find the neighbors
+
+d.3 Support Vector Machine 
+- Similar to Neural Network in their input and output structure 
+- Find line or boundary on the 2D plot to separate the categories  by their label
+d.4 Decision Tree: made from probability, ask successive questions from observations to classify, if .. else
+
+d.5 Feedforward Neural Networks 
+
+e. Types of neural networks 
+
+e. 1 Hopfield Neural Networks
+-Fully connected Network
+-Neurons collectively perform calculations 
+
+e. 1 Feedforward Neural Networks
+- Deep Networks 
+- Convolutional Neural Networks 
+
+f. Multilayer perceptrons
+- The best-known feedforward neural network 
+- It consists of neurons organized in layers 
+- Data traverses the network from input to output  
+- Input Layer has the input vector not neurons 
+- Hidden Layers are composed of interconnected neurons 
+- The output of previous hidden layer become the input of the next hidden layer 
+- Fully connected hidden layers 
+- Hidden layer because hnetwork does not expose them to the external world 
+- Output Layer is the last layer of neurons
+
+2. The building Blocks of Neural Networks 
+a. Neurons and the brain
+a. 1 The Brain 
+- made of millions of neurons
+- biological neural neutwork 
+- each neuron performs a very modest cognitive function 
+- the combination of these functions results in the brain's mental ability 
+a. 2 Neurons 
+
+- dendrite: 
+* takes electrical signals coming from nerves or other neurons 
+* signals may come from sense organs like the eyes, tongue, or ears 
+- nucleus: 
+* processing happens here, 
+* combinaison of input yield some response   
+* response is binary 
+* if the stimulus from inputs is high enough, the neuron fire an output signal  
+- axon: 
+* outupt signal goes thought here to other neurons or some other part of the body that will react to the signal
+such as muscles  
+
+
+b. A simple model of a neuron 
+- dendrite: x0, .., xn-1, each dendrite react differently to the input, using the weight, w0, ..., wn-1
+- nucleus: the action of performing the summation of weighted input 
+- axon: result of the summation 
+- produces a boundary line 
+
+b.2 Bias (y = ax + b, b is bias)
+
+- Without bias the boundary line pass always through the origin (0, 0)
+- A weighted sum is a linear function 
+- weight assigned to each input
+- independant input is needed to move the line vertically 
+- bias input is always set to 1 
+- bias has its own weight 
+
+c. Activation functions
+c.1 what's wrong with weighted sums
+- Values aren't constrained, so a sum result in
+- a very large value 
+- a very small value 
+- it's a linear function
+- the threshold to "fire" is not very well modeled change between true and false in not notable  
+- it's not easily trained 
+
+c. 2 what's wrong with Large and Small Values 
+- Input sensitivity should be reflected by the  weight not the  input signal 
+- x0 = 1000, x1 = 2, w0 = 2, w1 = 3, output = 2006, which is more influenced by input  x0/1000
+
+c. 3 what's wrong with Linear Functions 
+- Dramastic difference between categories near the boundary 
+- Difficulty for neuron to learn 
+
+c. 3 Adding Activation Functions Properties
+- Model the desired thresold behaviors
+- Usually constrain output values 
+- provide nonlinearity to the neuron 
+- enable training by backpropagation (must be differentiable)
+
+c. 4 Adding Activation Functions Examples
+- Binary Step Function:
+* Output are exactly 0 or 1 
+* Dramastic difference at boundaries x = 0
+- Logistic or Sigmoid Function 
+* Output are real numbers between 0/False and 1/True 
+- hyperbplic Tangent Function 
+* Output are real numbers between -1/False and 1/True
+- Rectified Linear Unit Function (ReLU)
+* Limits outputs to positive values 
+* Unbounded for positive values 
+
+d. Perceptrons: A better model of a neuron 
+d. 1. Interpreting the outputs 
+- The output comes from the sigmoid function 
+- The output is greater than 0.5 for a positive input(sum)
+- 0.5 seems a reasonable threshold for firing
+
+d. 2. Implementation Notes  
+- All values must be real not integers 
+- Weights and inputs must be implemented as 1D vectors 
+- weighted sum z = w.x (dot product)
+- Feed the sum z to the sigmoid Activation function 
+- Inital weight are choosen randomly, training will find optimized ones 
+- Number of weight = n(input) + 1(bias)
+-  Bias is the last input when doing the summation 
+- homework: finish the sigmoid function and set_weight functions 
+e. Design Logic gates
+Used to test neural networks 
+
+e. 1 AND Gate
+Ideal 
+A = 0, B = 0, Y = 0
+A = 0, B = 1, Y = 0
+A = 1, B = 0, Y = 0
+A = 1, B = 1, Y = 1
+A = x0, w0 = 10
+B = x1, w1 = 10
+bias = 1, w2 = -15
+
+Training 
+A = 0, B = 0, z = -15, Y = 0.0000003
+A = 0, B = 1, z = -5, Y = 0.0066929
+A = 1, B = 0, z = -5, Y = 0.0066929
+A = 1, B = 1, z = +5, Y = 0.9933071 
+
+e. 2 OR Gate
+Ideal 
+A = 0, B = 0, Y = 0
+A = 0, B = 1, Y = 1
+A = 1, B = 0, Y = 1
+A = 1, B = 1, Y = 1
+A = x0, w0 = 15
+B = x1, w1 = 15
+bias = 1, w2 = -10
+
+e. 1 NAND Gate
+Ideal 
+A = 0, B = 0, Y = 1
+A = 0, B = 1, Y = 1
+A = 1, B = 0, Y = 1
+A = 1, B = 1, Y = 0
+A = x0, w0 = -10
+B = x1, w1 = -10
+bias = 1, w2 = 15
+3. Building Your Network
+a. Linear separability
+- Using a line to separate categories  
+- only one neuron is required, if not need mulilayer 
+- xor/nand is not linear separable 
+XOR 
+A = 0, B = 0, Y = 0
+A = 0, B = 1, Y = 1
+A = 1, B = 0, Y = 1
+A = 1, B = 1, Y = 0
+
+but can combine NAND and OR gate to obtain XOR 
+
+b. Writing the multilayer perceptron class 
+
+4. Training Your Network 
+
+
+
+a. The need for training 
+a.1. Better hard-coded alternative 
+- Neural network with predifined weights are not useful example 
+- We can find hard coded alternative for implementing logic gates 
+- The real value of neural networks is their ability to learn 
+- Show plenty of example of logic gate input and output so that the
+ network can learn the behavior 
+ - algoithm to train multilayer perceptron: backpropagation
+ a.2. Linear separability is hardly a given 
+ - Single perceptron may be able to solve data that are not linear separable
+ - But need training
+ - Training: get most of the sample well classified but not necessarly all 
+ - Generaliation: model may be good at predicting data it has seen before but fail 
+ to give good results with unseen data 
+ a.3 Underfitting 
+
+ - 1 perceptron 
+ - Using only 1 line 
+ - 2 dots and 4 triangles 
+ - misclassifies too often 
+
+ a.4 Just Right 
+ - multilayer perceptrons 
+ - using an arc as a boundary 
+ - rarely misclassifies and generalizes well 
+ - 1 dot and 2 triangles 
+
+ a.5 Overfitting 
+ - Get all seen data correct 
+ - Bad at generalizing 
+ - Outlier are common 
+ - Fail predicting unseen data near the boundary 
+
+
+b. Thre training process 
+b. 1 Datasets 
+ - A dataset is a collection of samples with features and labels {X, Y}
+ - Features: the input data, ex: length, height, price, salary, number of rooms in house
+ blood sugar level
+ - Labels: the known categories of each sample 
+- Teach the network by showing samples to it 
+- The neural network learns with each feature-label pair 
+b. 2 Training Set: 
+- train the network for it to learn all it is supposed to learn 
+- only used with the learning algoithm: backpropagation
+
+b. 3 Validation Set: 
+- Train for many epochs 
+- Each time run the model with the training set is called an epoch 
+- Stop until a number of epoch is reached or error metric threshold 
+- Epoch may be 100 to 4000 
+- the validation set allows to rank the classifiers, 1, ..., 4, then 
+one can choose the one with the best performance  
+- clasifiers: SVM A, SVM B, Neural Network A, Neural Network B, Neural Network C
+- For NN, this is how to make different classifiers
+ 
+* varie the number of perceptrons per layer, 
+* change the  hidden layers 
+* change the activation function 
+b. 4  Testing Set 
+- only one model is used here 
+- Used to find how well the given model has done well compared to other competitors 
+* varie the number of perceptrons per layer, 
+* change the  hidden layers 
+* change the activation function 
+
+b. 5 Process: One Single Training sample 
+- Randomly initialize the weights of the network 
+- Feed an input sample X to the network 
+- Compare the output to the correct value y
+- Calculate the error 
+- User the error to adjust the weights
+- Objective: classify a little better in the future  without distording 
+the response of the network of the samples learnt/seen earlier 
+
+c. Error function 
+c. 1 Definition 
+- An error function measures how bad a classiier is doing 
+- Small value is good, large value is bad 
+- Gradient descent: training process 
+- 2 error metrics: output error( output of a neuron) and overall error( entire network) 
+
+c. 2 How to calculate the error for one sample 
+- Suppose we enter a sample {x, y} to a single perceptron 
+- The value at the output is out = 0.6 
+- The label attached to that sample  is y = 1 
+- The error may be easily calculated as error = y - out 
+- The training function must contribute to making out close to y, out  = y, error = 0 
+c. 3 Overall Training Error Function 
+- When assessing the performance of the neural network, use the mean squared error as 
+MSE = 1/n (sum from i = 0 to i = n - 1 of  (yi - outi) squared) n is the number of neuron 
+in the output layer 
+- Sign is ignored thanks to the squaring, it does not matter if the output is higher or smaller 
+than the desired one, we are extracting the size of the error 
+
+
+d. Gradient descent 
+- Training method for minimizing the error function 
+- Consists on adjusting  the weights to find the minimum error 
+- Think "going downhill" on the error function to  the lowest valley 
+- Simulate Gravity to reach lowest point in MSE vs Weight plot 
+- Local Minima as we don't know how the MSE vs Weight function looks like, MSE = f(Weights)
+- Method to overcome local minima 
+- 3 D Example of the gradient descent if we have weight, with 1, 2 D plot 
+
+e. The delta rule 
+- A simple update formula for adjusting the weights in a neuron 
+- Values considered: 
+* The output error: substraction error  
+* One input, the one affected by the weight needed to be tuned  
+* A constant known as the learning rate 
+* formula = delta w(ik) = eta* (yk - ok)* xik
+* w(ik) = weight i in a neuron k  
+* yk = label of neuron k (expected Prediction)
+* ok = actual output of neuron k
+* xik = input i th of neuron k  
+- The weight update will contribute to make the label and the predicted values closer 
+- Learning rate: unique constant
+- Hiher learning rate means faster learning but not necessarly better as it make go over
+the global minimum value 
+- Learning rate = 0.5 standard, may be tuned if learning is too fast or too slow 
+- Low Learning rate:
+* takes too much time
+* may stop at the first local minimum it finds 
+- High Learning rate:
+* Faster but may miss the minimum 
+- learning rate should mimic inertia 
+
+f. The backpropagation algorithm 
+f. 1 Definition 
+- General form of the delta rule 
+- Requirements on the neuron model, specifically on the activation function 
+- Calculates all weight updates throughout the network
+- Done by propagating the error back throught the layers 
+
+f.f 2 Steps 
+- 1. Feed a sample to the network 
+- 2. Calculate  the mean squared error 
+- 3. Calculate the error term of each output neuron 
+- 4. Iteratively calculate the error terms in the hidden layers 
+- 5. Apply the delta rule 
+- 6. Adjust the weights 
+
+f.f.f Implement the backpropagation algorithm 
+f.f.f.1 Network
+- Input:
+* x : x0, x1, x2
+* bias : 1 
+- output:
+* label y: y0, y1 
+* output o: o0, o1
+- Layers:
+* Layer Number: 4 
+* Layer0 ==> Input 
+* Layer1 ==> Hidden 1 
+* Layer2 ==> Hidden 2 
+* Layer3 ==> Output  
+f.f.f.2 Feed a sample to the network 
+- x = [2, 5, 1]
+- o = [0.2, 0.49]
+- y = [0, 1]
+- Calculate the means squared error 
+- MSE = 1/n (sum from i = 0 to i = n - 1 of  (yi - outi) squared)
+- y - o = [-0.2, 0.51]
+- (y - o) squared = [0.04, 0.2601]
+- n = 2, 2 neurons at the output layer 
+- MSE = (1/2)*(0.04 + 0.2601) = 0.15005
+- 0. 15 is small or larg? It doesn't matter, need to reduce it during the 
+learning process 
+- Calculate the output error terms of each neuron on the  hidden layers 
+- For neurons on the output layer, the output error is as follows: 
+* delta(k) =  o(k)*(1 - o(k))*(yk - o(k))
+*  o(k)*(1 - o(k)) =  derivative of the sigmoid function 
+* Main reason of using the sigmoid function as activation function of the neurons 
+
+- For neurons on the hidden layer, the output error is as follows: 
+* delta(h) =  o(h)*(1 - o(h))*(sum of the product of all error term on the next layer 
+tied to the current hidden neuron and their respective weight (w(kh) - delta(k)))
+* delta(hk) for completeness, where h is the number of the hidden layer and k the number 
+given to the neuron on that layer 
+* weight notation: w(kh), h is the current neuron number on layer l, k is the neuron on the next layer l + 1
+- Finally apply the delta rule as 
+* delta(Wij) = eta * delta(i) * x(ij)
+* Again j is current neuron on layer l, i is the number of the neuron on the following layer l + 1 
+* x(ij) = is the input to the neuron i, coming from neuron j 
+- Adjust the weight : wij = wij + delta(Wij)
+
+-Backpropagation function code 
+
+5. Make a Segment Display Classifier 
+- Optical Character Recognition (OCR)
+- Recongnize characters in a picture 
+- Useful for:
+* Digitizing books or documents/ convert them to pdf format 
+* Taking notes by hand/ipad then convert to pdf 
+* Reading: robot that read book louder, it reconize first the character before converting it to speech 
+
+a. Segment display recognition 
+- Recognize numbers from a seven-segment display 
+- 7 segments: 
+* a (up)
+* b (up right)
+* c (down right)
+* d (down)
+* e (down left)
+* f (up left)
+* g (middle) same alignment with up and down 
+3 as :
+* up
+* middle 
+* down 
+
+2 as :
+* up left
+* down left 
+
+
+2 as :
+* up right
+* down right 
+- Target: learn from the brightness of each segment 
+
+b. Design SDR neural network 
+b. 1 Questions
+- How would you recognize numbers from 0 to 9:
+- Think about the dimensions of your MLP: multi layer perceptrons 
+- How many outputs would you use ?
+- How many hidden layers and neurons per layer to use? 
+b. 2 Results 
+b. 2. 1 Network 1: 7 inputs, 1 hiddden layer with 7 neurons, and  1 output 
+- Inputs: a, b, c, d, e, f, g 
+- Outputs: one single number, between 0 to 9 
+- Hidden layer has 10 neurons, can be more 
+-  0.1....0.999 ==> 1
+-  0.5....0.5999 ==> 5 
+- digit = truncate( 10 * out) 
+- not good as the output interval is uniformly distributed at the input domain 
+- better for regression not for classification 
+- mapping unrelated classes to a value, its just label not a real value attached to the digit 
+
+
+b. 2. 2 Network 1: 7 inputs, 1 hidden layer with 7 neurons, and 10 outputs: one hot encoding  
+- One hot encoding:
+* each of the output represent one of the output classes 
+* each of the output neurons will raise its hands  whenever the pattern that 
+neuron is sensitive to 
+* the classes with the greatest value is reported 
+* all the classes have their own independant neurons, so they are not constrained by each other
+- Text predictor on smartphone 
+- Can guess the pattern to enter during real time processing 
+- Not good here as we are trying to recognize not predict/guess 
+
+b. 2. 3 Network 1: 7 inputs, 1 hidden layer with 7 neurons, and 7 outputs  
+
+c. Train SDR neural network 

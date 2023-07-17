@@ -10,9 +10,10 @@
 #include <iomanip>
 #include <tuple>
 #include <vector>
-
-
-
+#include <utility>
+#include <math.h>
+#include <iomanip>
+#include <type_traits>
 
 namespace za
 {
@@ -28,10 +29,24 @@ namespace za
 			};			
 			template<typename T> void print_row_table(std::vector<T> t, int width = 8, char separator = ' ')
 			{
-				for (auto cell : t)
+				////if (std::is_arithmetic_v<T>)
+				if (std::is_floating_point<T>::value)		
 				{
-					std::cout << std::left << std::setw(width) << std::setfill(separator) << cell;
+					for (auto cell : t)
+					{
+							std::cout << std::left << std::setw(width) << std::setfill(separator) << std::setprecision(1) << cell;
+					}
 				}
+				else
+				{
+					for (auto cell : t)
+					{
+
+						std::cout << std::left << std::setw(width) << std::setfill(separator) << cell;
+					}
+					
+				}
+
 				std::cout << std::endl;
 			};						
 			template<typename T> void print_table(std::vector<std::vector<T>> t, int width = 8, char separator = ' ')
