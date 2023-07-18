@@ -461,13 +461,13 @@ a. Segment display recognition
 * down 
 
 2 as :
-* up left
-* down left 
+* (f)up left
+* (e)down left 
 
 
 2 as :
-* up right
-* down right 
+* (b)up right
+* (c)down right 
 - Target: learn from the brightness of each segment 
 
 b. Design SDR neural network 

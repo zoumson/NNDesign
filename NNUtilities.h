@@ -14,6 +14,11 @@
 #include <math.h>
 #include <iomanip>
 #include <type_traits>
+#include <functional>
+#include <map>
+#include <sstream>
+//#include <charconv>
+#include <numeric>
 
 namespace za
 {

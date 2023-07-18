@@ -9,7 +9,8 @@ void runModel(const MODEL& model);
 int main()
 {
      
-    MODEL model = MODEL::SINGLE_PERCEPTRON_AND_GATE;
+    //MODEL model = MODEL::SINGLE_PERCEPTRON_AND_GATE;
+    MODEL model = MODEL::MULTIPLE_PERCEPTRON_SDR_7_IN_1_OUT;
     runModel(model);
     return 0;
 }
